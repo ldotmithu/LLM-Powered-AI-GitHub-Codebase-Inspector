@@ -19,18 +19,13 @@ def llm_summary(repo, max_repo_chars=2000):
     #truncated_repo = repo[:max_repo_chars] if len(repo) > max_repo_chars else repo
     
     prompt = (
-    "Create an engaging yet professional project summary formatted as markdown. "
-    "Use exactly 5 bullet points with this structure:\n\n"
-    
-    "✨ **Purpose**: <1-sentence value proposition>\n\n"
-    "🚀 **Core Functionality**: <2-3 key capabilities in simple terms>\n\n"
-    "🛠️ **Tech Stack**: <main languages/frameworks as tags, e.g. `Python` `React`>\n\n"
-    "🏛️ **Architecture**: <high-level design pattern in 1 phrase + key detail>\n\n"
-    "🌟 **Special Sauce**: <what makes this project unique or innovative>\n\n"
-    
+        "You are a senior software engineer. Summarize the purpose and functionality "
+        "of the following software project in exactly 5 concise bullet points. "
+        "Highlight its main features, technologies used, and overall architecture.\n\n"
+
     "Guidelines:\n"
     "- Use emojis as shown for visual scanning\n"
-    "- Keep each point under 15 words\n"
+    "- Keep each point under 25 words\n"
     "- Format technologies as code tags\n"
     "- Make it accessible to both technical and non-technical readers\n\n"
     
