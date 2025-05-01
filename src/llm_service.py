@@ -21,17 +21,19 @@ def llm_summary(repo, max_repo_chars=2000):
     #truncated_repo = repo[:max_repo_chars] if len(repo) > max_repo_chars else repo
     
     prompt = (
-        "You are a senior software engineer. Summarize the purpose and functionality "
-        "Highlight its main features, technologies used, and overall architecture.\n\n"
-        "Easy way to explain about the project maximun 100 words must follw this condition"
-
-    "Guidelines:\n"
-    "- Use emojis as shown for visual scanning\n"
-    "- Format technologies as code tags\n"
-    
-    "Project excerpt:\n"
-    f"{repo}"
+    "🧑‍💻 You are a senior software engineer tasked with summarizing a software project.\n\n"
+    "🎯 **Objective:** Provide a concise summary (max 100 words) explaining the *purpose* and *functionality* of the project.\n\n"
+    "📌 **Include:**\n"
+    "- ✅ Main features\n"
+    "- 🛠️ Technologies used (in `<code>` format)\n"
+    "- 🏗️ Overall architecture (brief)\n\n"
+    "✨ **Style Guidelines:**\n"
+    "- Use emojis for clarity and engagement\n"
+    "- Keep the explanation beginner-friendly and easy to understand\n"
+    "- Follow a friendly, clear tone\n\n"
+    f"📄 **Project Excerpt:**\n{repo}"
 )
+
     
     response = client.chat.completions.create(
         model="meta-llama/llama-4-maverick-17b-128e-instruct",
