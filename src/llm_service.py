@@ -45,28 +45,10 @@ def llm_summary(repo, max_repo_chars=2000):
     return response.choices[0].message.content
 
 def llm_chain(vector_db):
-    prompt_template = PromptTemplate(
-        input_variables=["context", "question"],
-        template="""
-You are a helpful AI assistant. Use the information below to answer the user's question in accurate way.
-
-Only use the context provided. If the answer is not in the context, say: "I'm not sure based on the provided code."
-
-Context:
-{context}
-
-Question:
-{question}
-
-Answer (clear and simple):
-"""
-    )
-
     qa_chain = RetrievalQA.from_chain_type(
         llm=chat_llm,
         retriever=vector_db.as_retriever(),
         chain_type="stuff",
-        chain_type_kwargs={"prompt": prompt_template},
         return_source_documents=False
     )
 
