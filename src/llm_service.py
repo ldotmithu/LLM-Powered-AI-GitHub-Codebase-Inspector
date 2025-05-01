@@ -19,21 +19,18 @@ def llm_summary(repo, max_repo_chars=2000):
     truncated_repo = repo[:max_repo_chars] if len(repo) > max_repo_chars else repo
     
     prompt = (
-        "You are a senior software engineer. Summarize the purpose and functionality "
-        "of the following software project in exactly 5 concise bullet points. "
-        "Focus on:\n"
-        "- Main purpose/value proposition\n"
-        "- Core functionality\n"
-        "- Key technologies/languages\n"
-        "- Architectural approach\n"
-        "- Notable features\n\n"
+        "As a senior engineer, summarize this project in exactly 5 bullet points:\n"
+        "1. Primary purpose (1 sentence)\n"
+        "2. Core functionality\n"
+        "3. Key technologies (langs/frameworks)\n"
+        "4. Architectural style\n"
+        "5. Notable features\n\n"
         "Project details:\n"
-        f"{truncated_repo}\n\n"
-        "Provide only the 5 bullet points, no additional commentary."
+        f"{truncated_repo}"
     )
     
     response = client.chat.completions.create(
-        model="deepseek-r1-distill-llama-70b",
+        model="llama-3.3-70b-versatile",
         messages=[{
             "role": "user",  
             "content": prompt
