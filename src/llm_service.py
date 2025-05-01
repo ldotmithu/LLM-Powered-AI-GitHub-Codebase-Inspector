@@ -45,19 +45,19 @@ def llm_summary(repo, max_repo_chars=2000):
     )
     return response.choices[0].message.content
 
-# def llm_chain(vector_db):
-#     qa_chain = RetrievalQA.from_chain_type(
-#         llm=chat_llm,
-#         retriever=vector_db.as_retriever(),
-#         chain_type="stuff",
-#         return_source_documents=False
-#     )
-
-#     return qa_chain
 def llm_chain(vector_db):
-    memory = ConversationSummaryMemory(llm=chat_llm, memory_key = "chat_history", return_messages=True)
-    qa_chain = ConversationalRetrievalChain.from_llm(chat_llm, retriever=vector_db.as_retriever(search_type="mmr", search_kwargs={"k":8}), memory=memory)
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=chat_llm,
+        retriever=vector_db.as_retriever(),
+        chain_type="stuff",
+        return_source_documents=False
+    )
+
     return qa_chain
+# def llm_chain(vector_db):
+#     memory = ConversationSummaryMemory(llm=chat_llm, memory_key = "chat_history", return_messages=True)
+#     qa_chain = ConversationalRetrievalChain.from_llm(chat_llm, retriever=vector_db.as_retriever(search_type="mmr", search_kwargs={"k":8}), memory=memory)
+#     return qa_chain
     
 
 
