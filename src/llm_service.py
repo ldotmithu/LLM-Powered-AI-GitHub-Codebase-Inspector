@@ -45,7 +45,7 @@ def llm_summary(repo, max_repo_chars=2000):
 def llm_chain(vecter_db):
     qa_chain = RetrievalQA.from_chain_type(llm=chat_llm, 
                                            retriever=vecter_db.as_retriever(search_type="similarity", search_kwargs={"k": 5}),
-                                           return_source_documents=True,
+                                           #return_source_documents=True,
                                             chain_type="stuff")
     return qa_chain
 
