@@ -33,7 +33,7 @@ def llm_summary(repo, max_repo_chars=2000):
     )
     
     response = client.chat.completions.create(
-        model="distil-whisper-large-v3-en",
+        model="deepseek-r1-distill-llama-70b",
         messages=[{
             "role": "user",  
             "content": prompt
