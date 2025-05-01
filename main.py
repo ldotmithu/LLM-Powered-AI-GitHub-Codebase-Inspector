@@ -59,7 +59,8 @@ if url:
 
         if user_question:
             with st.spinner("💡 Generating answer..."):
-                answer = llm_chain(query=user_question, vectorstore=vector.as_retriever())
+                qa = llm_chain(vector) 
+                answer = qa.run(user_question)
             st.success("✅ Answer:")
             st.write(answer)
 
