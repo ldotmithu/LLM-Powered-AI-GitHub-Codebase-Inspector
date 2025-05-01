@@ -44,7 +44,7 @@ def llm_summary(repo, max_repo_chars=2000):
             "role": "user",  
             "content": prompt
         }],
-        temperature=0.3,  
+        temperature=0.5,  
         max_tokens=500    
     )
     return response.choices[0].message.content
