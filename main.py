@@ -26,48 +26,52 @@ url = st.sidebar.text_input("🔗 Enter the GitHub Repository URL")
 status_box = st.sidebar.empty()
 
 
-if url:
+if url and "vector_store" not in st.session_state:
     try:
-        # Clone the repo and process the data
         status_box.text("🔄 Cloning the repository...")
         data = load_github_url(repo_url=url)
+        st.session_state.data = data
 
         status_box.text("🔍 Splitting and chunking the code...")
         docs = split_repo(repo=data)
+        st.session_state.docs = docs
 
         status_box.text("🔗 Loading embedding model from Hugging Face...")
         embedding = load_embedding()
+        st.session_state.embedding = embedding
 
         status_box.text("💾 Creating vector store from code chunks...")
         vector = vector_db(embedding=embedding, docs=docs)
-        
+        st.session_state.vector_store = vector
 
         status_box.text("🧠 Generating project summary with LLM...")
         summary = llm_summary(repo=data)
+        st.session_state.summary = summary
 
-        vector_store =FAISS.load_local(folder_path=vecter_store_path,embeddings=embedding,
-                                       allow_dangerous_deserialization=True)
         status_box.text("✅ Done!")
-
-        
-        st.markdown("---")
-        st.subheader("📄 Project Summary")
-        st.markdown(
-            f"<div style='background-color: #2D2D2D; padding: 20px; border-radius: 10px; font-size:16px; color:white;'>{summary}</div>",
-            unsafe_allow_html=True,)
-        
-        
-        st.markdown("---")
-        st.subheader("💬 Ask Questions About the Codebase")
-        user_question = st.text_input("Type your question about the codebase...")
-
-        if user_question:
-            with st.spinner("💡 Generating answer..."):
-                qa = llm_chain(vector_store) 
-                answer = qa.run(user_question)
-            st.success("✅ Answer:")
-            st.write(answer)
 
     except Exception as e:
         status_box.text("❌ Error")
         st.error(f"Oops! Something went wrong: {str(e)}")
+
+# Display summary if already computed
+if "summary" in st.session_state:
+    st.markdown("---")
+    st.subheader("📄 Project Summary")
+    st.markdown(
+        f"<div style='background-color: #2D2D2D; padding: 20px; border-radius: 10px; font-size:16px; color:white;'>{st.session_state.summary}</div>",
+        unsafe_allow_html=True,
+    )
+
+# Question-answering interface
+if "vector_store" in st.session_state:
+    st.markdown("---")
+    st.subheader("💬 Ask Questions About the Codebase")
+    user_question = st.text_input("Type your question about the codebase...")
+
+    if user_question:
+        with st.spinner("💡 Generating answer..."):
+            qa = llm_chain(st.session_state.vector_store)
+            answer = qa.run(user_question)
+        st.success("✅ Answer:")
+        st.write(answer)
