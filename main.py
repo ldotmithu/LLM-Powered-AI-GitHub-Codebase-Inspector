@@ -46,7 +46,7 @@ if url:
         summary = llm_summary(repo=data)
 
         vector_store =FAISS.load_local(folder_path=vecter_store_path,embeddings=embedding,
-                                       allow_dangerous_deserialization=False)
+                                       allow_dangerous_deserialization=True)
         status_box.text("✅ Done!")
 
         
