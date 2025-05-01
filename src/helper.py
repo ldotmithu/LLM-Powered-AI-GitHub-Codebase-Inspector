@@ -45,6 +45,7 @@ def load_embedding():
 
 def vector_db(embedding,docs):
     vectors_db= FAISS.from_documents(documents=docs,embedding=embedding)
+    vectors_db.save_local("faiss_index")
     return vectors_db
 
 
