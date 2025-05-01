@@ -22,6 +22,7 @@ def llm_summary(repo, max_repo_chars=2000):
     prompt = (
         "You are a senior software engineer. Summarize the purpose and functionality "
         "Highlight its main features, technologies used, and overall architecture.\n\n"
+        "Easy way to explain about the project"
 
     "Guidelines:\n"
     "- Use emojis as shown for visual scanning\n"

@@ -5,6 +5,7 @@ import shutil
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 import subprocess
+from langchain.text_splitter import Language
 
 def git_clean_and_delete(repo_path):
     if os.path.exists(repo_path):
@@ -34,8 +35,9 @@ def load_github_url(repo_url):
 
 
 def split_repo(repo):
-    splittter = RecursiveCharacterTextSplitter(chunk_size = 1000,
-                                   chunk_overlap=100)
+    splittter = RecursiveCharacterTextSplitter.from_language(language = Language.PYTHON,
+                                                             chunk_size = 500,
+                                                             chunk_overlap = 20)
     docs = splittter.split_documents(repo)
     return docs
 
