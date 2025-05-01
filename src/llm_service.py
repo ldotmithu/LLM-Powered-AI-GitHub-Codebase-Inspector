@@ -1,6 +1,7 @@
 from groq import Groq
 from langchain_groq import ChatGroq
 from langchain.chains import RetrievalQA
+from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 import os 
 load_dotenv()
@@ -42,12 +43,32 @@ def llm_summary(repo, max_repo_chars=2000):
     )
     return response.choices[0].message.content
 
-def llm_chain(vecter_db):
-    qa_chain = RetrievalQA.from_chain_type(llm=chat_llm, 
-                                           retriever=vecter_db.as_retriever(),
-                                           #return_source_documents=True,
-                                            #chain_type="stuff"
-                                        )
+def llm_chain(vector_db):
+    # Define a custom prompt template
+    prompt_template = PromptTemplate(
+        input_variables=["context", "question"],
+        template="""
+You are a helpful AI assistant with deep knowledge of programming concepts and GitHub repositories.
+Use the context below to answer the user's question as clearly and accurately as possible.
+
+Context:
+{context}
+
+Question:
+{question}
+
+Answer:"""
+    )
+
+    # Create the QA chain with custom prompt
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=chat_llm,
+        retriever=vector_db.as_retriever(),
+        chain_type="stuff",
+        chain_type_kwargs={"prompt": prompt_template},
+        return_source_documents=False
+    )
+
     return qa_chain
 
 
