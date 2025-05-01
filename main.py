@@ -47,10 +47,10 @@ if url:
         # Display project summary
         st.markdown("---")
         st.subheader("📄 Project Summary")
-        #st.markdown(
-            #f"<div style='background-color: #2D2D2D; padding: 20px; border-radius: 10px; font-size:16px; color:white;'>{summary}</div>",
-            #unsafe_allow_html=True,)
-        st.markdown(summary,unsafe_allow_html=True)    
+        st.markdown(
+            f"<div style='background-color: #2D2D2D; padding: 20px; border-radius: 10px; font-size:16px; color:white;'>{summary}</div>",
+            unsafe_allow_html=True,)
+        #st.markdown(summary,unsafe_allow_html=True)    
 
         # Section for users to ask questions about the codebase
         st.markdown("---")
@@ -59,7 +59,7 @@ if url:
 
         if user_question:
             with st.spinner("💡 Generating answer..."):
-                answer = llm_chain(query=user_question, vectorstore=vector)
+                answer = llm_chain(query=user_question, vectorstore=vector.as_retriever())
             st.success("✅ Answer:")
             st.write(answer)
 
