@@ -19,15 +19,24 @@ def llm_summary(repo, max_repo_chars=2000):
     truncated_repo = repo[:max_repo_chars] if len(repo) > max_repo_chars else repo
     
     prompt = (
-        "As a senior engineer, summarize this project in exactly 5 bullet points:\n"
-        "1. Primary purpose (1 sentence)\n"
-        "2. Core functionality\n"
-        "3. Key technologies (langs/frameworks)\n"
-        "4. Architectural style\n"
-        "5. Notable features\n\n"
-        "Project details:\n"
-        f"{truncated_repo}"
-    )
+    "Create an engaging yet professional project summary formatted as markdown. "
+    "Use exactly 5 bullet points with this structure:\n\n"
+    
+    "✨ **Purpose**: <1-sentence value proposition>\n\n"
+    "🚀 **Core Functionality**: <2-3 key capabilities in simple terms>\n\n"
+    "🛠️ **Tech Stack**: <main languages/frameworks as tags, e.g. `Python` `React`>\n\n"
+    "🏛️ **Architecture**: <high-level design pattern in 1 phrase + key detail>\n\n"
+    "🌟 **Special Sauce**: <what makes this project unique or innovative>\n\n"
+    
+    "Guidelines:\n"
+    "- Use emojis as shown for visual scanning\n"
+    "- Keep each point under 15 words\n"
+    "- Format technologies as code tags\n"
+    "- Make it accessible to both technical and non-technical readers\n\n"
+    
+    "Project excerpt:\n"
+    f"{truncated_repo}"
+)
     
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
