@@ -6,11 +6,11 @@ import os
 load_dotenv()
 
 client = Groq(
-    api_key=os.getenv("GROQ_API_KEY")
+    api_key=os.environ["GROQ_API_KEY"]
 )
 
 chat_llm = ChatGroq(
-    api_key=os.getenv("GROQ_API_KEY"),
+    api_key=os.environ["GROQ_API_KEY"],
     temperature=0.6,
     model="llama3-70b-8192"
 )
