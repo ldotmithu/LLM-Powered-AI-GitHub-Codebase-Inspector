@@ -15,19 +15,31 @@ chat_llm = ChatGroq(
     model="mistral-saba-24b"
 )
 
-def llm_summery(repo):
+def llm_summary(repo, max_repo_chars=2000):
+    truncated_repo = repo[:max_repo_chars] if len(repo) > max_repo_chars else repo
+    
     prompt = (
         "You are a senior software engineer. Summarize the purpose and functionality "
         "of the following software project in exactly 5 concise bullet points. "
-        "Highlight its main features, technologies used, and overall architecture.\n\n"
-        f"{repo}")
+        "Focus on:\n"
+        "- Main purpose/value proposition\n"
+        "- Core functionality\n"
+        "- Key technologies/languages\n"
+        "- Architectural approach\n"
+        "- Notable features\n\n"
+        "Project details:\n"
+        f"{truncated_repo}\n\n"
+        "Provide only the 5 bullet points, no additional commentary."
+    )
     
     response = client.chat.completions.create(
+        model="gemma-2b-it",
         messages=[{
-            "role":'system',
-            'content':prompt
-        }],model="gemma2-9b-it",
-        temperature=0.5
+            "role": "user",  
+            "content": prompt
+        }],
+        temperature=0.3,  
+        max_tokens=500    
     )
     return response.choices[0].message.content
 

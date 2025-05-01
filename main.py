@@ -1,6 +1,6 @@
 import streamlit as st
 from src.helper import load_github_url, split_repo, load_embedding, vector_db
-from src.llm_service import llm_summery, llm_chain
+from src.llm_service import llm_summary, llm_chain
 
 # Page configuration for a clean layout
 st.set_page_config(page_title="LLM GitHub Codebase Inspector", layout="wide")
@@ -39,7 +39,7 @@ if url:
         vector = vector_db(embedding=embedding, docs=docs)
 
         status_box.text("🧠 Generating project summary with LLM...")
-        summary = llm_summery(repo=data)
+        summary = llm_summary(repo=data)
 
         # Final success message
         status_box.text("✅ Done!")
