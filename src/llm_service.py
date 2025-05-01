@@ -16,7 +16,7 @@ chat_llm = ChatGroq(
 )
 
 def llm_summary(repo, max_repo_chars=2000):
-    truncated_repo = repo[:max_repo_chars] if len(repo) > max_repo_chars else repo
+    #truncated_repo = repo[:max_repo_chars] if len(repo) > max_repo_chars else repo
     
     prompt = (
     "Create an engaging yet professional project summary formatted as markdown. "
@@ -35,7 +35,7 @@ def llm_summary(repo, max_repo_chars=2000):
     "- Make it accessible to both technical and non-technical readers\n\n"
     
     "Project excerpt:\n"
-    f"{truncated_repo}"
+    f"{repo}"
 )
     
     response = client.chat.completions.create(
@@ -44,8 +44,8 @@ def llm_summary(repo, max_repo_chars=2000):
             "role": "user",  
             "content": prompt
         }],
-        temperature=0.7,  
-        max_tokens=500,
+        temperature=0.9,  
+        #max_tokens=500,
         response_format={"type": "text"}    
     )
     return response.choices[0].message.content
