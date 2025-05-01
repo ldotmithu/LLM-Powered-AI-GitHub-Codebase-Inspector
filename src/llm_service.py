@@ -12,7 +12,7 @@ client = Groq(
 chat_llm = ChatGroq(
     api_key=os.getenv("GROQ_API_KEY"),
     temperature=0.6,
-    model="mistral-saba-24b"
+    model="gemma2-9b-it"
 )
 
 def llm_summary(repo, max_repo_chars=2000):
