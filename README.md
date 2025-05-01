@@ -54,7 +54,8 @@ streamlit run main.py
 ```
 
 ## 🔑 Environment Variables (.env)
-Create a .env file in the root directory:
+- Create a .env file in the root directory:
+- get groq api key : (https://console.groq.com/playground)
 ```.env
 GROQ_API_KEY=your_groq_key_here
 ```
