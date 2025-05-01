@@ -72,6 +72,6 @@ if "vector_store" in st.session_state:
     if user_question:
         with st.spinner("💡 Generating answer..."):
             qa = llm_chain(st.session_state.vector_store)
-            answer = qa.run(user_question)
+            result = qa(user_question)
         st.success("✅ Answer:")
-        st.write(answer)
+        st.write(result['answer'])
