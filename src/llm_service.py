@@ -44,12 +44,12 @@ def llm_summary(repo, max_repo_chars=2000):
     return response.choices[0].message.content
 
 def llm_chain(vector_db):
-    # Define a custom prompt template
     prompt_template = PromptTemplate(
         input_variables=["context", "question"],
         template="""
-You are a helpful AI assistant with deep knowledge of programming concepts and GitHub repositories.
-Use the context below to answer the user's question as clearly and accurately as possible.
+You are a helpful AI assistant. Use the information below to answer the user's question in a simple and accurate way.
+
+Only use the context provided. If the answer is not in the context, say: "I'm not sure based on the provided code."
 
 Context:
 {context}
@@ -57,10 +57,10 @@ Context:
 Question:
 {question}
 
-Answer:"""
+Answer (clear and simple):
+"""
     )
 
-    # Create the QA chain with custom prompt
     qa_chain = RetrievalQA.from_chain_type(
         llm=chat_llm,
         retriever=vector_db.as_retriever(),
@@ -70,7 +70,6 @@ Answer:"""
     )
 
     return qa_chain
-
 
 
 
