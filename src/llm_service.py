@@ -12,7 +12,7 @@ client = Groq(
 chat_llm = ChatGroq(
     api_key=os.getenv("GROQ_API_KEY"),
     temperature=0.6,
-    model="gemma2-9b-it"
+    model="llama3-70b-8192"
 )
 
 def llm_summary(repo, max_repo_chars=2000):
@@ -31,7 +31,7 @@ def llm_summary(repo, max_repo_chars=2000):
 )
     
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="meta-llama/llama-4-maverick-17b-128e-instruct",
         messages=[{
             "role": "user",  
             "content": prompt
