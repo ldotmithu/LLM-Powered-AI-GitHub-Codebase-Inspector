@@ -22,7 +22,7 @@ def llm_summary(repo, max_repo_chars=2000):
     
     prompt = (
     "🧑‍💻 You are a senior software engineer tasked with summarizing a software project.\n\n"
-    "🎯 **Objective:** Provide a concise summary (max 100 words) explaining the *purpose* and *functionality* of the project.\n\n"
+    "🎯 **Objective:** Provide a concise summary (max 250 words) explaining the *purpose* and *functionality* of the project.\n\n"
     "📌 **Include:**\n"
     "- ✅ Main features\n"
     "- 🛠️ Technologies used (in `<code>` format)\n"
