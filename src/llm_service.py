@@ -1,7 +1,8 @@
 from groq import Groq
 from langchain_groq import ChatGroq
 from langchain.chains import RetrievalQA
-from langchain.prompts import PromptTemplate
+from langchain.memory import ConversationSummaryMemory
+from langchain.chains import ConversationalRetrievalChain
 from dotenv import load_dotenv
 import os 
 load_dotenv()
@@ -22,7 +23,7 @@ def llm_summary(repo, max_repo_chars=2000):
     prompt = (
         "You are a senior software engineer. Summarize the purpose and functionality "
         "Highlight its main features, technologies used, and overall architecture.\n\n"
-        "Easy way to explain about the project"
+        "Easy way to explain about the project maximun 100 words must follw this condition"
 
     "Guidelines:\n"
     "- Use emojis as shown for visual scanning\n"
@@ -44,15 +45,20 @@ def llm_summary(repo, max_repo_chars=2000):
     )
     return response.choices[0].message.content
 
-def llm_chain(vector_db):
-    qa_chain = RetrievalQA.from_chain_type(
-        llm=chat_llm,
-        retriever=vector_db.as_retriever(),
-        chain_type="stuff",
-        return_source_documents=False
-    )
+# def llm_chain(vector_db):
+#     qa_chain = RetrievalQA.from_chain_type(
+#         llm=chat_llm,
+#         retriever=vector_db.as_retriever(),
+#         chain_type="stuff",
+#         return_source_documents=False
+#     )
 
+#     return qa_chain
+def llm_chain(vector_db):
+    memory = ConversationSummaryMemory(llm=chat_llm, memory_key = "chat_history", return_messages=True)
+    qa_chain = ConversationalRetrievalChain.from_llm(chat_llm, retriever=vector_db.as_retriever(search_type="mmr", search_kwargs={"k":8}), memory=memory)
     return qa_chain
+    
 
 
 
