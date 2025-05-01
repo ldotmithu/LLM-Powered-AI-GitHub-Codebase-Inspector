@@ -33,7 +33,7 @@ def llm_summary(repo, max_repo_chars=2000):
     )
     
     response = client.chat.completions.create(
-        model="gemma-2b-it",
+        model="gemma2-9b-it",
         messages=[{
             "role": "user",  
             "content": prompt
