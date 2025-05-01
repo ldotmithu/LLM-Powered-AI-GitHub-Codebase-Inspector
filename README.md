@@ -76,8 +76,8 @@ GROQ_API_KEY=your_groq_key_here
 
 ## 🙌 Credits
 
-- Built with ❤️ by Mithurshan
-- ![linkedin](https://www.linkedin.com/in/mithurshan6)
+- Built with ❤️ by Mithurshan [linkedin](https://www.linkedin.com/in/mithurshan6)
+
 
 ---
 
