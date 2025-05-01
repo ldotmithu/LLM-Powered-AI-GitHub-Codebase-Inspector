@@ -52,6 +52,13 @@ pip install -r requirements.txt
 streamlit run main.py
 
 ```
+
+## 🔑 Environment Variables (.env)
+Create a .env file in the root directory:
+```.env
+GROQ_API_KEY=your_groq_key_here
+```
+
 ## 🧪 Use Case Scenarios
 
 - 📘 Exploring unfamiliar open-source repositories
