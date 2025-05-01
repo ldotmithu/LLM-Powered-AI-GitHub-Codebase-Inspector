@@ -20,7 +20,6 @@ def llm_summary(repo, max_repo_chars=2000):
     
     prompt = (
         "You are a senior software engineer. Summarize the purpose and functionality "
-        "of the following software project in exactly 5 concise bullet points. "
         "Highlight its main features, technologies used, and overall architecture.\n\n"
 
     "Guidelines:\n"
